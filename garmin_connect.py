@@ -1,4 +1,5 @@
 from garminconnect import Garmin
+from garminconnect.workout import BaseWorkout
 
 DEFAULT_ACTIVITY_TYPES = (
     "cycling",
@@ -36,3 +37,19 @@ class GarminConnect:
                 file_object.write(data)
 
         return [f"{activity_id}_{activity_type}.zip" for activity_id, activity_type in activity_ids]
+
+    def is_valid_workout(self, workout_as_json):
+        """Validate a workout JSON object against the Garmin Training API schema."""
+        try:
+            workout = BaseWorkout.model_validate(workout_as_json)
+            return workout is not None
+        except Exception:
+            return False
+
+    def upload_workout(self, workout_as_json):
+        """Upload a workout JSON object to Garmin Connect."""
+        try:
+            result = self.client.upload_workout(workout_as_json)
+            return result
+        except Exception:
+            return None
