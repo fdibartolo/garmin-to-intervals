@@ -3,6 +3,7 @@
 
 import json
 import os
+import re
 from dotenv import load_dotenv
 from constants import GREEN, RED, RESET, YELLOW
 from genai import GenAI
@@ -24,7 +25,13 @@ def main():
     try:
         print(f"{YELLOW} ➜ Generating workout...{RESET}")
         response = genai_client.generate_content(prompt)
-        print(response)
+
+        if os.getenv("WORKOUT_UPLOAD_CONFIRMATION").lower() == "true":
+            print(response)
+            proceed = input(f"{YELLOW}\n ➜ Please review the generated workout. Proceed with uploading it?\n[y]es\n[n]o\n ➜ {RESET}")
+            if proceed.lower() != "y":
+                print(f"{YELLOW} ➜ Upload skipped by the user, exiting...{RESET}")
+                return
 
         workout_as_json = json.loads(response)
         
@@ -38,7 +45,7 @@ def main():
         if result is None:
             print(f"{RED} ✗ Failed to upload workout.{RESET}")
             return
-        
+
         print(f"{GREEN} ✓ Workout uploaded successfully! (ID: {result['workoutId']}){RESET}")
 
     except Exception as e:
