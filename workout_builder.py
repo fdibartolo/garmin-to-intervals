@@ -3,11 +3,11 @@
 
 import json
 import os
-import re
 from dotenv import load_dotenv
 from constants import GREEN, RED, RESET, YELLOW
 from genai import GenAI
 from garmin_connect import GarminConnect
+from helper import Helper
 
 def main():
     genai_client = GenAI(os.getenv("GEMINI_API_KEY"), os.getenv("GEMINI_MODEL"))
@@ -47,6 +47,9 @@ def main():
             return
 
         print(f"{GREEN} ✓ Workout uploaded successfully! (ID: {result['workoutId']}){RESET}")
+
+        filename = f"{result['workoutName']}_({result['workoutId']}).json"
+        Helper.save_workout(filename, workout_as_json)
 
     except Exception as e:
         print(f"{RED} ✗ An error occurred while generating the workout: {e}{RESET}")

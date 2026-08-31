@@ -39,7 +39,7 @@ The sport type is declared both at the top level of the workout and repeated ins
 | 2 | `cycling` |
 | 5 | `strength_training` |
 | 17 | `indoor_cycling` |
-| 4 | `other` |
+| 3 | `other` |
 
 ---
 
@@ -267,8 +267,11 @@ Swimming uses a different `sportTypeId` from running or cycling. There are two v
 
 | `sportTypeId` | `sportTypeKey` | Use |
 |---|---|---|
+| 4 | `swimming` | all purpose |
 | 26 | `pool_swimming` | Pool (structured, lap-counted) |
 | 29 | `open_water_swimming` | Open water |
+
+> **MUST DO ALWAYS** For **every** swimming workouts **must always use** `sportTypeId: 4` (`swimming`), as it would work on both sub types.
 
 The `sportType` is declared both at the top level of the workout and repeated inside each `workoutSegment`. For swimming:
 
@@ -276,15 +279,15 @@ The `sportType` is declared both at the top level of the workout and repeated in
 {
   "workoutName": "Technique Set",
   "sportType": {
-    "sportTypeId": 26,
-    "sportTypeKey": "pool_swimming"
+    "sportTypeId": 4,
+    "sportTypeKey": "swimming"
   },
   "workoutSegments": [
     {
       "segmentOrder": 1,
       "sportType": {
-        "sportTypeId": 26,
-        "sportTypeKey": "pool_swimming"
+        "sportTypeId": 4,
+        "sportTypeKey": "swimming"
       },
       "poolLength": 25,
       "poolLengthUnit": {
@@ -464,14 +467,14 @@ A structured 2,400m session: warm-up → kick drill set → pull set → interva
 {
   "workoutName": "Technique + Speed 2400m",
   "sportType": {
-    "sportTypeId": 26,
-    "sportTypeKey": "pool_swimming"
+    "sportTypeId": 4,
+    "sportTypeKey": "swimming"
   },
   "estimatedDurationInSecs": 3600,
   "workoutSegments": [
     {
       "segmentOrder": 1,
-      "sportType": { "sportTypeId": 26, "sportTypeKey": "pool_swimming" },
+      "sportType": { "sportTypeId": 4, "sportTypeKey": "swimming" },
       "poolLength": 25,
       "poolLengthUnit": { "unitId": 1, "unitKey": "meter", "factor": 1.0 },
       "workoutSteps": [
@@ -589,7 +592,6 @@ A structured 2,400m session: warm-up → kick drill set → pull set → interva
 | Drill type | — | `drillType` object |
 | Distance unit | meters (for running) | always meters |
 | Targets | pace, HR, power, cadence | generally `no.target` (Garmin Connect's swim builder doesn't expose pace zones to devices the same way) |
-| `sportTypeId` | 1 (run), 2/17 (cycle) | 26 (pool), 29 (open water) |
 
 > **On swim targets:** Garmin's pool swim workout format doesn't reliably support pace zone targets the way running does — the watch tracks SWOLF and stroke count instead. The recommended pattern for swim intensity is to use `no.target` (`workoutTargetTypeId: 1`) and rely on step description text to communicate the effort level (e.g. "at threshold pace").
 
