@@ -14,11 +14,13 @@ Here's the full schema reference for the Garmin Training API JSON format:
   "workoutName": "5K Interval Run", // string, required
   "description": "...",            // string, optional
   "sportType": { ... },            // required — see Sport Types
-  "estimatedDurationInSecs": 3600, // integer, optional
+  "estimatedDurationInSecs": 3600, // integer, required
   "author": { ... },               // optional, set by Garmin
   "workoutSegments": [ ... ]       // array, required — the actual steps
 }
 ```
+
+You **MUST ALWAYS** include above fields that are marked as **required**
 
 ---
 
