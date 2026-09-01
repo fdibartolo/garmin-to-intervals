@@ -7,7 +7,7 @@ from datetime import datetime
 from constants import GREEN, RED, RESET, YELLOW
 from helper import Helper
 from garmin_connect import GarminConnect
-from intervals_uploader import IntervalsUploader
+from intervals_client import IntervalsClient
 
 def process_activities(start_date):
     print(f"{YELLOW} ➜ Processing activities...{RESET}")
@@ -17,7 +17,7 @@ def process_activities(start_date):
     if len(files) > 0:
         print(f"{GREEN} ✓ Downloaded {len(files)} activity files from Garmin...{RESET}")
 
-        intervals_uploader = IntervalsUploader(os.getenv("INTERVALS_ATHLETE_ID"), os.getenv("INTERVALS_USERNAME"), os.getenv("INTERVALS_PASSWORD"))
+        intervals_uploader = IntervalsClient(os.getenv("INTERVALS_ATHLETE_ID"), os.getenv("INTERVALS_USERNAME"), os.getenv("INTERVALS_PASSWORD"))
         success = intervals_uploader.upload_activity_files(files)
         if success:
             print(f"{GREEN} ✓ Uploaded {len(files)} activity files to Intervals.icu!{RESET}")

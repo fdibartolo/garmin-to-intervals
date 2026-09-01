@@ -2,7 +2,7 @@ import requests
 import time
 from constants import GREEN, RED, RESET, YELLOW
 
-class IntervalsUploader:
+class IntervalsClient:
     """Intervals.icu interface"""
 
     def __init__(self, athlete_id, username, password):
