@@ -1,6 +1,6 @@
 import requests
 import time
-from constants import GREEN, RED, RESET, YELLOW
+from src.constants import GREEN, RED, RESET, YELLOW
 
 class IntervalsClient:
     """Intervals.icu interface"""
