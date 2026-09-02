@@ -93,5 +93,50 @@ class TestHelper(unittest.TestCase):
             loaded_data = json.load(f)
         self.assertEqual(loaded_data, workout_data)
 
+    # ********************* strip_markdown tests ****************************************
+    def test_strip_markdown_removes_markdown_code_block(self):
+        text = '```json\n{"key": "value"}\n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '{"key": "value"}')
+
+    def test_strip_markdown_strips_leading_and_trailing_whitespace(self):
+        text = '  ```json\n{"key": "value"}\n```  '
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '{"key": "value"}')
+
+    def test_strip_markdown_with_language_specifier(self):
+        text = '```python\nprint("hello")\n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, 'print("hello")')
+
+    def test_strip_markdown_without_code_block(self):
+        text = '{"key": "value"}'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '{"key": "value"}')
+
+    def test_strip_markdown_with_multiline_content(self):
+        text = '```json\n{\n  "name": "test",\n  "value": 123\n}\n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '{\n  "name": "test",\n  "value": 123\n}')
+
+    def test_strip_markdown_with_empty_content(self):
+        text = '```\n\n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '')
+
+    def test_strip_markdown_with_only_whitespace_content(self):
+        text = '```\n   \n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, '')
+
+    def test_strip_markdown_empty_string(self):
+        result = Helper.strip_markdown('')
+        self.assertEqual(result, '')
+
+    def test_strip_markdown_with_backticks_in_content(self):
+        text = '```\ncode with `backticks` inside\n```'
+        result = Helper.strip_markdown(text)
+        self.assertEqual(result, 'code with `backticks` inside')
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,6 @@
 from google import genai
 from google.genai import types
+from src.helper import Helper
 
 class GenAI:
     """Google GenAI interface"""
@@ -22,11 +23,4 @@ class GenAI:
             ),
             contents = prompt
         )
-        return self.__strip_markdown(response.text)
-
-    def __strip_markdown(self, text):
-        response_text = text.strip()
-        if response_text.startswith("```"):
-            response_text = response_text.split("\n", 1)[1]
-            response_text = response_text.rsplit("\n```", 1)[0].strip()
-        return response_text
+        return Helper.strip_markdown(response.text)
