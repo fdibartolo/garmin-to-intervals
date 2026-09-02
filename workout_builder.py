@@ -10,20 +10,11 @@ from src.garmin_connect import GarminConnect
 from src.helper import Helper
 
 def main():
-    genai_client = GenAI(os.getenv("GEMINI_API_KEY"), os.getenv("GEMINI_MODEL"))
-    
     prompt = input(f"{YELLOW}\n ➜ Describe the workout you want to build: {RESET}")
-
-    # prompt = f"""
-    #     you are an expert software developer who specializes in building JSON objects for the Garmin Training API.
-    #     use the provided system_instructions to complement your knowledge and understand the Garmin Training API schema, field names, etc.
-    #     you are instructed to build a JSON object for the Garmin Training API based on the following workout steps:
-    #     '{content}'
-    #     you MUST respond ONLY with valid JSON that complies with the Garmin Training API schema definition, no explanation
-    # """
+    print(f"{YELLOW} ➜ Generating workout...{RESET}")
 
     try:
-        print(f"{YELLOW} ➜ Generating workout...{RESET}")
+        genai_client = GenAI(os.getenv("GEMINI_API_KEY"), os.getenv("GEMINI_MODEL"))
         response = genai_client.generate_content(prompt)
 
         if os.getenv("WORKOUT_UPLOAD_CONFIRMATION").lower() == "true":
