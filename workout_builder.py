@@ -48,8 +48,11 @@ def main():
 
         print(f"{GREEN} ✓ Workout uploaded successfully! (ID: {result['workoutId']}){RESET}")
 
-        filename = f"{result['workoutName']}_({result['workoutId']}).json"
-        Helper.save_workout(filename, workout_as_json)
+        save_workout = input(f"{YELLOW}\n ➜ Do you want to save the workout locally?\n[y]es\n[n]o\n ➜ {RESET}")
+        if save_workout.lower() == "y":
+            filename = f"{result['workoutName']}_({result['workoutId']}).json"
+            Helper.save_workout(filename, workout_as_json)
+            print(f"{GREEN} ✓ Workout saved locally at {filename}{RESET}")
 
     except Exception as e:
         print(f"{RED} ✗ An error occurred while generating the workout: {e}{RESET}")
