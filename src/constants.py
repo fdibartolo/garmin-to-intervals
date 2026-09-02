@@ -1,4 +1,7 @@
 RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
+GREY = "\033[90m"
 RESET = "\033[00m"
+ITALIC_FONT = "\033[3m"
+NORMAL_FONT = "\033[23m"
