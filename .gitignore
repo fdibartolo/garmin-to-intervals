@@ -1,6 +1,6 @@
 .env
 
 /generated/*.json
-/prompts/*
+/prompts/samples.md
 
 **/__pycache__/

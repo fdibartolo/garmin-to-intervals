@@ -4,10 +4,10 @@
 import sys, os
 from dotenv import load_dotenv
 from datetime import datetime
-from constants import GREEN, RED, RESET, YELLOW
-from helper import Helper
-from garmin_connect import GarminConnect
-from intervals_client import IntervalsClient
+from src.constants import GREEN, RED, RESET, YELLOW
+from src.helper import Helper
+from src.garmin_connect import GarminConnect
+from src.intervals_client import IntervalsClient
 
 def process_activities(start_date):
     print(f"{YELLOW} ➜ Processing activities...{RESET}")

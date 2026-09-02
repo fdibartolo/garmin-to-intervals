@@ -3,12 +3,14 @@ from google.genai import types
 
 class GenAI:
     """Google GenAI interface"""
+    
+    CUSTOM_INSTRUCTIONS = 'prompts/instructions.md'
 
     def __init__(self, api_key, model):
         self.client = genai.Client(api_key=api_key)
         self.model = model
         
-        with open('instructions.md', 'r') as f:
+        with open(self.CUSTOM_INSTRUCTIONS, 'r') as f:
             self.instructions = f.read()
 
     def generate_content(self, prompt):

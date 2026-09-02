@@ -4,10 +4,10 @@
 import json
 import os
 from dotenv import load_dotenv
-from constants import GREEN, RED, RESET, YELLOW
-from genai import GenAI
-from garmin_connect import GarminConnect
-from helper import Helper
+from src.constants import GREEN, RED, RESET, YELLOW
+from src.genai import GenAI
+from src.garmin_connect import GarminConnect
+from src.helper import Helper
 
 def main():
     genai_client = GenAI(os.getenv("GEMINI_API_KEY"), os.getenv("GEMINI_MODEL"))
