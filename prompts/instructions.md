@@ -461,6 +461,21 @@ The step types are shared with other sports, but swimming uses them with a speci
 
 ---
 
+### Assumtptions for swimming workouts
+
+#### Exercise 1 drill
+
+if the user prompts: 
+- 'do exercise 1', or 'execute exercise 1', or any other reference to 'exercise 1' 
+it must be translated into: 
+- 8 intervals of 50 meters drill (add step description 'ejer 1') with paddles equipment, with 10 seconds of rest in between
+
+#### Rest between steps
+
+if the user is not explicitly requesting for an specific rest or recovery step between swim steps, you must add a rest until lap button pressed
+
+---
+
 ### Complete Swimming Workout Example
 
 A structured 2,400m session: warm-up → kick drill set → pull set → interval repeats → cool-down.
