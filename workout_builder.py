@@ -39,6 +39,18 @@ def main():
 
         print(f"{GREEN} ✓ Workout uploaded successfully! (ID: {result['workoutId']}){RESET}")
 
+        devices = garmin_connect.get_devices()
+        if devices:
+            device_options = "\n".join([f"[{d['key']}] {d['device']}" for d in devices])
+            push_to_device = input(f"{YELLOW}\n ➜ Do you want to push the workout to your device?\n{device_options}\n[s]kip\n ➜ {RESET}")
+            if push_to_device in [d['key'] for d in devices]:
+                device_id = next(d['id'] for d in devices if d['key'] == push_to_device)
+                success = garmin_connect.push_workout_to_device(result['workoutId'], device_id)
+                if success:
+                    print(f"{GREEN} ✓ Workout pushed to device successfully!{RESET}")
+                else:
+                    print(f"{RED} ✗ Failed to push workout to device.{RESET}")
+
         save_workout = input(f"{YELLOW}\n ➜ Do you want to save the workout locally?\n[y]es\n[n]o\n ➜ {RESET}")
         if save_workout.lower() == "y":
             filename = f"{result['workoutName']}_({result['workoutId']}).json"

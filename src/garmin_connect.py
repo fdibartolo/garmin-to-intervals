@@ -53,3 +53,19 @@ class GarminConnect:
             return result
         except Exception:
             return None
+
+    def get_devices(self):
+        """Retrieve the list of devices associated with the Garmin account."""
+        try:
+            devices = self.client.get_devices()
+            return [{"key": str(i + 1), "device": device["displayName"], "id": device["deviceId"]} for i, device in enumerate(devices)]
+        except Exception:
+            return None
+        
+    def push_workout_to_device(self, workout_id, device_id):
+        """Push a workout to a specific device."""
+        try:
+            success = self.client.push_workout_to_device(workout_id, device_id)
+            return success
+        except Exception:
+            return False
