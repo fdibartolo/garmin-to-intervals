@@ -10,6 +10,16 @@ from src.genai import GenAI
 from src.garmin_connect import GarminConnect
 from src.helper import Helper
 
+def print_help():
+    print("\nGarmin workout builder")
+    print("----------------------")
+    print("Usage: python workout_builder.py [-h] [-f <path>]")
+    print("  -f <path>   Load the workout from a JSON file")
+    print("  -h          Show this help message")
+    print("\n")
+    print("  if no args are passed, you will be prompted to describe the workout, and will be generated using AI")
+    print("\n")
+
 def generate_workout(prompt):
     print(f"{YELLOW} ➜ Generating workout...{RESET}")
     genai_client = GenAI(os.getenv("GEMINI_API_KEY"), os.getenv("GEMINI_MODEL"))
@@ -64,6 +74,10 @@ def offer_save_locally(workout_as_json, result):
     print(f"{GREEN} ✓ Workout saved locally at {filename}{RESET}")
 
 def main(argv):
+    if "-h" in argv:
+        print_help()
+        return
+
     try:
         if "-f" in argv:
             file_index = argv.index("-f")
@@ -77,7 +91,6 @@ def main(argv):
             return
 
         garmin_connect = GarminConnect(os.getenv("GARMIN_USERNAME"), os.getenv("GARMIN_PASSWORD"))
-
         result = upload_workout(garmin_connect, workout_as_json)
         if result is None:
             return
