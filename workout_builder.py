@@ -3,6 +3,7 @@
 
 import json
 import os
+import sys
 from dotenv import load_dotenv
 from src.constants import GREEN, RED, RESET, YELLOW
 from src.genai import GenAI
@@ -62,11 +63,16 @@ def offer_save_locally(workout_as_json, result):
     Helper.save_workout(filename, workout_as_json)
     print(f"{GREEN} ✓ Workout saved locally at {filename}{RESET}")
 
-def main():
-    prompt = input(f"{YELLOW}\n ➜ Describe the workout you want to build: {RESET}")
-
+def main(argv):
     try:
-        workout_as_json = generate_workout(prompt)
+        if "-f" in argv:
+            file_index = argv.index("-f")
+            with open(argv[file_index + 1], "r", encoding="utf-8") as file:
+                workout_as_json = json.load(file)
+        else:
+            prompt = input(f"{YELLOW}\n ➜ Describe the workout you want to build: {RESET}")
+            workout_as_json = generate_workout(prompt)
+
         if workout_as_json is None:
             return
 
@@ -85,4 +91,4 @@ def main():
 
 if __name__ == "__main__":
     load_dotenv() 
-    main()
+    main(sys.argv)
